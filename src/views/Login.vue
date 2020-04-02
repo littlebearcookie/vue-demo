@@ -44,7 +44,7 @@ export default {
 					this.$session.start();
 					this.login_msg = '登入成功';
 					this.$session.set('token', 'ImLogin');
-					this.$session.set('user_id', res.data.USER_ID);
+					this.$session.set('user_no', res.data.USER_NO);
 					this.$session.set('user_name', res.data.USER_NAME);
 					this.$router.push('/');
 				}

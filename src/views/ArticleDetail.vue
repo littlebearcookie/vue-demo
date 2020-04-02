@@ -70,6 +70,7 @@ export default {
 	methods:{
 		insert_message(){
 			var message = {
+				"USER_NO":this.$session.get('user_no'),
 				"ARTICLE_NO":this.$route.params.article_no,
 				"MESAAGE_DETAIL":this.new_message
 			}

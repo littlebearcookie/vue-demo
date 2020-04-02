@@ -13,10 +13,14 @@
 				<tr v-for="article in articles" :key="article.ARTICLE_NO">
 					<td>{{article.ARTICLE_TITLE}}</td>
 					<td>{{article.USER_NAME}}</td>
-					<td>
+					<td v-if="article.USER_NO == $session.get('user_no')">
+
 						<router-link class="btn btn-sm btn-primary" :to="{name:'article_detail',params:{'article_no':article.ARTICLE_NO}}">查看</router-link>
 						<router-link class="btn btn-sm btn-warning" :to="{name:'article_edit',params:{'article_no':article.ARTICLE_NO}}">編輯</router-link>
 						<button type="button" class="btn btn-sm btn-danger" @click="delete_article(article.ARTICLE_NO)">刪除</button>
+					</td>
+					<td v-else>
+						<router-link class="btn btn-sm btn-primary" :to="{name:'article_detail',params:{'article_no':article.ARTICLE_NO}}">查看</router-link>
 					</td>
 				</tr>
 			</tbody>

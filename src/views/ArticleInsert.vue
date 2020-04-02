@@ -2,14 +2,10 @@
 	<div class="container my-5">
 		<div>
 			<div class="form-group text-left">
-				<label>發文者</label>
-				<input class="form-control" v-model="article_user">
-			</div>
-				<div class="form-group text-left">
 				<label>標題</label>
 				<input class="form-control" v-model="article_title">
 			</div>
-				<div class="form-group text-left">
+			<div class="form-group text-left">
 				<label>內容</label>
 				<textarea rows="10" class="form-control" v-model="article_detail"></textarea>
 			</div>
@@ -25,8 +21,7 @@
 export default {
 	name: 'ArticleInsert',
 	data () {
-		return {
-			article_user:'', 
+		return { 
 			article_title:'',
 			article_detail:''
 		}
@@ -34,7 +29,7 @@ export default {
 	methods:{
 		insert_article(){
 			var article = {
-				"ARTICLE_USER":this.article_user,
+				"USER_NO":this.$session.get('user_no'),
 				"ARTICLE_TITLE":this.article_title,
 				"ARTICLE_DETAIL":this.article_detail
 			}

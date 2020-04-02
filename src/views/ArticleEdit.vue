@@ -2,14 +2,10 @@
 	<div class="container my-5">
 		<div>
 			<div class="form-group text-left">
-				<label>發文者</label>
-				<input class="form-control" v-model="article.USER_NAME">
-			</div>
-				<div class="form-group text-left">
 				<label>標題</label>
 				<input class="form-control" v-model="article.ARTICLE_TITLE">
 			</div>
-				<div class="form-group text-left">
+			<div class="form-group text-left">
 				<label>內容</label>
 				<textarea rows="10" class="form-control" v-model="article.ARTICLE_DETAIL"></textarea>
 			</div>
@@ -47,7 +43,7 @@ export default {
 		edit_article(){
 			var article = {
 				"ARTICLE_NO":this.$route.params.article_no,
-				"ARTICLE_USER":this.article.USER_NAME,
+				"USER_NO":this.$session.get('user_no'),
 				"ARTICLE_TITLE":this.article.ARTICLE_TITLE,
 				"ARTICLE_DETAIL":this.article.ARTICLE_DETAIL
 			}
