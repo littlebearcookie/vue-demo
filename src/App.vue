@@ -2,7 +2,7 @@
 	<div id="app">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 			<router-link class="navbar-brand" :to="{name:'home'}">
-				<img src="./assets/logo.png" id="logo">
+				<img src="@/assets/logo.png" id="logo">
 			</router-link>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -13,7 +13,15 @@
 						<router-link class="nav-link" :to="{name:'home'}">首頁</router-link>
 					</li>
 				</ul>
-				<ul class="navbar-nav ml-auto">
+				<ul class="navbar-nav ml-auto" v-if="this.$session.get('token') === 'ImLogin'">
+					<li class="nav-item">
+						<span class="navbar-text">{{this.$session.get('user_name') | user_hello}}</span>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link" @click="logout">登出</a>
+					</li>
+				</ul>
+				<ul class="navbar-nav ml-auto" v-else>
 					<li class="nav-item">
 						<router-link class="nav-link" :to="{name:'login'}">登入</router-link>
 					</li>
@@ -23,13 +31,24 @@
 				</ul>
 			</div>  
 		</nav>
-		<router-view/>
+		<router-view></router-view>
 	</div>
 </template>
 
 <script>
 export default {
-  name: 'App',
+	name: 'App',
+	methods:{
+		logout(){
+			this.$session.destroy();
+			this.$router.go(0);
+		}
+	},
+	filters:{
+		user_hello(value){
+			return value+" 您好 ";
+		}
+	}
 }
 </script>
 

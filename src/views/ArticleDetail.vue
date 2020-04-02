@@ -39,7 +39,6 @@ export default {
 			article:[],
 			messages:[],
 			new_message:'',
-			price:90000
 		}
 	},
 	created: function(){

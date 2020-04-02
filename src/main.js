@@ -13,6 +13,9 @@ Vue.prototype.$qs = qs
 // Bootstrap
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
+// vue-session
+import VueSession from 'vue-session'
+Vue.use(VueSession)
 // My Config
 import { CONFIG as SiteConfig } from './config'
 Vue.prototype.$conf = SiteConfig

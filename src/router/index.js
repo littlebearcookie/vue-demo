@@ -32,25 +32,28 @@ var router = new Router({
 			component: Home, 
 			// 設定此路由(包括children路由)的meta值
             // 可以在全域 router.beforeEach 中篩選識別所有流過的路由(判斷特殊邏輯)
-			// meta: { requireAuth: true },
+			meta: { requireAuth: true },
 		},
 		// 新增文章
 		{
 			path: '/insert',
 			name: 'article_insert',
-			component: ArticleInsert
+			component: ArticleInsert,
+			meta: { requireAuth: true },
 		},
 		// 編輯文章
 		{
 			path: '/edit/:article_no',
 			name: 'article_edit',
-			component: ArticleEdit
+			component: ArticleEdit,
+			meta: { requireAuth: true },
 		},
 		// 查看文章
 		{
 			path: '/detail/:article_no',
 			name: 'article_detail',
-			component: ArticleDetail
+			component: ArticleDetail,
+			meta: { requireAuth: true },
 		},
 	]
 })
@@ -59,10 +62,9 @@ var router = new Router({
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requireAuth)) {
 
-        // this route requires auth (record.meta.requireAuth == true)
-
-        let isLogin = false;
-        
+		// this route requires auth (record.meta.requireAuth == true)
+		
+		let isLogin = (Vue.prototype.$session.get('token') === 'ImLogin');
         // 兩種方式判斷登入與否:
         // 1. 前端確認登入沒 (但是有可能過期或直接被server side強制踢出，但反正資料一定會再跟server要，到時再驗證token囉)
         // 2. 最保險就是直接ajax透過後端檢查token囉
@@ -78,8 +80,7 @@ router.beforeEach((to, from, next) => {
         //     let data = await authService.isTokenAlive();
         //     isLogin = data;
         // }
-
-        if (isLogin === false && from.path !== '/login') {
+        if (isLogin === false && to.path !== '/login') {
             next({
                 path: '/login',
                 // query: { redirect: to.fullPath }

@@ -49,7 +49,6 @@ export default {
 		.catch((error)=>{
 
 		});
-
 	},
 	methods:{
 		delete_article(article_no){
