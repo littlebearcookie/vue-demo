@@ -10,23 +10,32 @@
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<router-link class="nav-link" :to="{name:'home'}">首頁</router-link>
+						<router-link class="nav-link" :to="{name:'home'}">{{$t('__home')}}</router-link>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							{{$t('__language')}}
+						</a>
+						<div class="dropdown-menu" aria-labelledby="languageDropdown">
+							<button type="button" class="dropdown-item" @click="switch_lang('en')">English</button>
+							<button type="button" class="dropdown-item" @click="switch_lang('tw')">繁體中文</button>
+						</div>
 					</li>
 				</ul>
 				<ul class="navbar-nav ml-auto" v-if="this.$session.get('token') === 'ImLogin'">
 					<li class="nav-item">
-						<span class="navbar-text">{{this.$session.get('user_name') | user_hello}}</span>
+						<span class="navbar-text">{{this.$session.get('user_name')}}</span>
 					</li>
 					<li class="nav-item">
-						<a href="#" class="nav-link" @click="logout">登出</a>
+						<a href="#" class="nav-link" @click="logout">{{$t('__logout')}}</a>
 					</li>
 				</ul>
 				<ul class="navbar-nav ml-auto" v-else>
 					<li class="nav-item">
-						<router-link class="nav-link" :to="{name:'login'}">登入</router-link>
+						<router-link class="nav-link" :to="{name:'login'}">{{$t('__login')}}</router-link>
 					</li>
 					<li class="nav-item">
-						<router-link class="nav-link" :to="{name:'register'}">註冊</router-link>
+						<router-link class="nav-link" :to="{name:'register'}">{{$t('__register')}}</router-link>
 					</li>
 				</ul>
 			</div>  
@@ -42,11 +51,10 @@ export default {
 		logout(){
 			this.$session.destroy();
 			this.$router.go(0);
-		}
-	},
-	filters:{
-		user_hello(value){
-			return value+" 您好 ";
+		},
+		switch_lang(lang){
+			this.$i18n.locale = lang;
+			localStorage.setItem('locale', lang);
 		}
 	}
 }

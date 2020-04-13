@@ -3,6 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+// i18n(language)
+import i18n from '@/lang/lang'
 // axios (Vue Ajax)
 import vueaxios from 'vue-axios'
 import axios from 'axios'
@@ -24,6 +26,7 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  i18n,
   router,
   components: { App },
   template: '<App/>'

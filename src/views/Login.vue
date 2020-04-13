@@ -2,15 +2,15 @@
 	<div class="container my-5">
 		<div class="row justify-content-center">
 			<div class="col-md-4 com-sm-12 justify-content-left">
-				<h3>登入</h3>
+				<h3>{{$t('__login')}}</h3>
 				<div class="input-group input-group-sm my-3">
-					<input class="form-control" placeholder="Enter Account" v-model="account">
+					<input class="form-control" :placeholder="$t('__enterAccount')" v-model="account">
 				</div>
 				<div class="input-group input-group-sm my-3">
-					<input type="password" class="form-control" placeholder="Enter password" v-model="pwd">
+					<input type="password" class="form-control" :placeholder="$t('__enterPassword')" v-model="pwd">
 				</div>
 				<div>{{login_msg}}</div>
-				<button type="button" class="btn btn-success" @click="login">Login</button>
+				<button type="button" class="btn btn-success" @click="login">{{$t('__login')}}</button>
 			</div>
 		</div>
 	</div>
@@ -23,7 +23,7 @@ export default {
 		return {
 			account:'',
 			pwd:'',
-			login_msg:''
+			login_msg:'',
 		}
 	},
 	methods:{

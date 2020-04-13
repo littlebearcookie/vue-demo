@@ -1,0 +1,9 @@
+{
+	"__home": "Home",
+	"__language": "English",
+    "__login": "Login",
+	"__logout": "Logout",
+    "__register": "Register",
+    "__enterAccount": "Enter Account",
+    "__enterPassword": "Enter Password"
+}
