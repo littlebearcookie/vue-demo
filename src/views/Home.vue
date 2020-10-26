@@ -1,75 +1,129 @@
-<template>				
-	<div class="container my-3">
-		<router-link class="btn btn-success float-right mb-2" :to="{name:'article_insert'}">新增文章</router-link>
-		<table class="table">
-			<thead class="thead-dark">
-				<tr>
-					<th style="width:50%">標題</th>
-					<th style="width:30%">發文者</th>
-					<th style="width:20%">功能</th>
-				</tr>
-			</thead>
-			<tbody v-if="articles.length != 0">
-				<tr v-for="article in articles" :key="article.ARTICLE_NO">
-					<td>{{article.ARTICLE_TITLE}}</td>
-					<td>{{article.USER_NAME}}</td>
-					<td v-if="article.USER_NO == $session.get('user_no')">
-
-						<router-link class="btn btn-sm btn-primary" :to="{name:'article_detail',params:{'article_no':article.ARTICLE_NO}}">查看</router-link>
-						<router-link class="btn btn-sm btn-warning" :to="{name:'article_edit',params:{'article_no':article.ARTICLE_NO}}">編輯</router-link>
-						<button type="button" class="btn btn-sm btn-danger" @click="delete_article(article.ARTICLE_NO)">刪除</button>
-					</td>
-					<td v-else>
-						<router-link class="btn btn-sm btn-primary" :to="{name:'article_detail',params:{'article_no':article.ARTICLE_NO}}">查看</router-link>
-					</td>
-				</tr>
-			</tbody>
-			<tbody v-else>
-				<tr>
-					<td colspan="3" class="text-center">目前尚無文章</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+<template>
+  <div class="container my-3">
+    <div class="mb-2 input-group">
+      <input
+        type="text"
+        class="form-control"
+        v-model="note_detail"
+        :placeholder="$t('Home.__enterNote')"
+      />
+      <div class="input-group-append">
+        <button class="btn btn-success" type="button" @click="addNote()">
+          {{ $t("Home.__add") }}
+        </button>
+      </div>
+    </div>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th style="width: 60%">{{ $t("Home.__note") }}</th>
+          <th style="width: 20%">{{ $t("Home.__modifiedTime") }}</th>
+          <th style="width: 20%"></th>
+        </tr>
+      </thead>
+      <tbody v-if="notes.length != 0">
+        <tr v-for="(note, i) in notes" :key="i">
+          <td>
+            <template v-if="i == editIndex">
+              <input type="text" v-model="note.detail" />
+            </template>
+            <template v-else>{{ note.detail }}</template>
+          </td>
+          <td>{{ note.time | transformTime() }}</td>
+          <td>
+            <template v-if="i == editIndex">
+              <button class="btn btn-sm btn-success" @click="editNote(i)">
+                {{ $t("Home.__save") }}
+              </button>
+              <button class="btn btn-sm btn-light" @click="editIndex = null">
+                {{ $t("Home.__cancel") }}
+              </button>
+            </template>
+            <template v-else>
+              <button class="btn btn-sm btn-warning" @click="editIndex = i">
+                {{ $t("Home.__edit") }}
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm btn-danger"
+                @click="delNote(i)"
+              >
+                {{ $t("Home.__delete") }}
+              </button></template
+            >
+          </td>
+        </tr>
+      </tbody>
+      <tbody v-else>
+        <tr>
+          <td colspan="3" class="text-center">{{ $t("Home.__noNote") }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 <script>
 export default {
-	name: 'Home',
-	data () {
-		return {
-			articles:[],
-		}
-	},
-	created: function(){
-		const options = {
-			method:'GET',
-			headers:{'Content-Type': 'application/x-www-form-urlencoded'},
-			url: this.$conf.AJAX_PATH+'/articles.php'
-		};
-		this.axios(options)
-		.then((res)=>{
-			this.articles = res.data;
-		})
-		.catch((error)=>{
-
-		});
-	},
-	methods:{
-		delete_article(article_no){
-			const options = {
-				method:'GET',
-				headers:{'Content-Type': 'application/x-www-form-urlencoded'},
-				url: this.$conf.AJAX_PATH+'/article_delete.php',
-				params:{article_no:article_no}
-			};
-			this.axios(options)
-			.then((res)=>{
-				this.$router.go(0)
-			}).catch((error)=>{
-			});
-		}
-	}
-}
+  name: "Home",
+  data() {
+    return {
+      notes: [],
+      note_detail: "",
+      editIndex: null,
+    };
+  },
+  created() {
+    this.getNotes();
+  },
+  filters: {
+    transformTime: function (val) {
+      let date = new Date(val * 1000);
+      let y = date.getFullYear();
+      let MM = date.getMonth() + 1;
+      MM = MM < 10 ? "0" + MM : MM;
+      let d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      let h = date.getHours();
+      h = h < 10 ? "0" + h : h;
+      let m = date.getMinutes();
+      m = m < 10 ? "0" + m : m;
+      let s = date.getSeconds();
+      s = s < 10 ? "0" + s : s;
+      return y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
+    },
+  },
+  methods: {
+    getNotes() {
+      this.notes = this.$session.has("notes") ? this.$session.get("notes") : [];
+    },
+    addNote() {
+      var note = {
+        detail: this.note_detail,
+        time: Math.floor(Date.now() / 1000),
+      };
+      if (this.$session.has("notes")) {
+        var temp = this.$session.get("notes");
+        temp.push(note);
+        this.$session.set("notes", temp);
+      } else {
+        this.$session.set("notes", [note]);
+      }
+      this.getNotes();
+    },
+    editNote(i) {
+      this.notes[i].time = Math.floor(Date.now() / 1000);
+      this.$session.set("notes", this.notes);
+      this.editIndex = null;
+      this.getNotes();
+    },
+    delNote(i) {
+      var temp = this.$session.get("notes");
+      temp.splice(i, 1);
+      this.$session.set("notes", temp);
+      this.getNotes();
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

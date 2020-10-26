@@ -1,9 +1,21 @@
 {
 	"__home": "首頁",
+	"__hello": "您好",
 	"__language": "繁體中文",
-	"__login": "登入",
 	"__logout": "登出",
-    "__register": "註冊",
-    "__enterAccount": "輸入帳號",
-    "__enterPassword": "輸入密碼"
+	"Login": {
+		"__login": "登入",
+		"__enterUserName": "輸入用戶名稱"
+	},
+	"Home": {
+		"__enterNote": "輸入筆記",
+		"__add": "新增",
+		"__note": "筆記",
+		"__modifiedTime": "修改時間",
+		"__edit": "編輯",
+		"__save": "儲存",
+		"__cancel": "取消",
+		"__delete": "刪除",
+		"__noNote": "沒有筆記"
+	}
 }

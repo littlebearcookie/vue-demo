@@ -1,13 +1,13 @@
 # vue-demo
 
-> My First Vue.js project.  
+> 這是我第一個Vue.js的專案.  
 
 [English](./README.md)/[中文](./README-TW.md)  
 [Live Demo](https://littlebearcookie.github.io/vue-demo/)
 
 # Description
-This is my first vue project.  
-It can save your notes.  
+
+這是我第一個Vue.js的專案，可以用來儲存一些筆記.  
 
 ## Build Setup
 

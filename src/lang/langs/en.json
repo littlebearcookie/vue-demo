@@ -1,9 +1,21 @@
 {
 	"__home": "Home",
+	"__hello": "Hello",
 	"__language": "English",
-    "__login": "Login",
 	"__logout": "Logout",
-    "__register": "Register",
-    "__enterAccount": "Enter Account",
-    "__enterPassword": "Enter Password"
+	"Login": {
+		"__login": "Login",
+		"__enterUserName": "Enter User Name"
+	},
+	"Home": {
+		"__enterNote": "Enter Note",
+		"__add": "Add",
+		"__note": "Note",
+		"__modifiedTime": "ModifiedTime",
+		"__edit": "Edit",
+		"__save": "Save",
+		"__cancel": "Cancel",
+		"__delete": "Delete",
+		"__noNote": "No Note"
+	}
 }
