@@ -2,7 +2,7 @@
   <div class="container my-5">
     <div class="row justify-content-center">
       <div class="col-md-4 com-sm-12 justify-content-left">
-        <h3>{{ $t("__login") }}</h3>
+        <h3>{{ $t("Login.__login") }}</h3>
         <div class="input-group input-group-sm my-3">
           <input
             class="form-control"
